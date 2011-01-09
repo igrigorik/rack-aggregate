@@ -1,7 +1,7 @@
 module Rack
   module Aggregate
     class Context
-      AGGREGATE_PATH  = /^\/aggregate/.freeze
+      AGGREGATE_PATH  = /^\/aggregate$/.freeze
 
       def initialize(app, options = {}, &blk)
         options = {
@@ -29,7 +29,9 @@ module Rack
           return resp.finish
         end
 
+        start = Time.now
         @status, @headers, @response = @app.call(env)
+        @aggregate << (Time.now - start) * 1000
 
         [@status, @headers, @response]
       end

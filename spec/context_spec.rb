@@ -22,5 +22,17 @@ describe Rack::Aggregate do
       response.body.should match('Empty histogram')
     end
 
+    it 'should collect aggregate performance statistics' do
+      respond_with(200)
+
+      10.times { get('/some_endpoint') }
+      response = get('/aggregate')
+
+      response.status.should == 200
+      [:mean, :min, :max, :std_dev].each do |metric|
+        response.body.should match(/#{metric}:\s+\d\.\d+/)
+      end
+    end
+
   end
 end
