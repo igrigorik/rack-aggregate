@@ -19,6 +19,7 @@ module Rack
           resp = Rack::Response.new('', 200)
           resp['Content-Type'] = 'text/plain'
 
+          resp.write "count:   #{@aggregate.count}\n"
           [:mean, :min, :max, :std_dev].each do |metric|
             resp.write "#{metric}:   %1.2fms\n" % (@aggregate.send(metric) || 0)
           end
