@@ -19,9 +19,9 @@ module Rack
           resp = Rack::Response.new('', 200)
           resp['Content-Type'] = 'text/plain'
 
-          resp.write "count:   #{@aggregate.count}\n"
+          resp.write "count:\t\t#{@aggregate.count}\n"
           [:mean, :min, :max, :std_dev].each do |metric|
-            resp.write "#{metric}:   %1.2fms\n" % (@aggregate.send(metric) || 0)
+            resp.write "#{metric}:\t\t%1.2fms\n" % (@aggregate.send(metric) || 0)
           end
 
           resp.write "Request histogram:\n"
