@@ -9,7 +9,7 @@ module Rack
         }.merge(options)
 
         @app = app
-        @aggregate = ::Aggregate.new
+        @aggregate = options[:aggregate] || ::Aggregate.new
 
         yield self if block_given?
       end

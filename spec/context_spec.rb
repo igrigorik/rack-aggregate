@@ -8,6 +8,12 @@ describe Rack::Aggregate do
       Rack::Aggregate.new(app).should respond_to(:call)
     end
 
+    it 'take an existing Aggregate object' do
+      a = Aggregate.new
+      tmp = Rack::Aggregate.new(app, :aggregate => a)
+      tmp.instance_variable_get(:@aggregate).object_id.should == a.object_id
+    end
+
     it 'take an options Hash' do
       lambda { Rack::Aggregate.new(app, {}) }.should_not raise_error(ArgumentError)
     end
