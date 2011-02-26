@@ -31,10 +31,10 @@ module Rack
         end
 
         start = Time.now
-        @status, @headers, @response = @app.call(env)
+        response = @app.call(env)
         @aggregate << (Time.now - start) * 1000
 
-        [@status, @headers, @response]
+        response
       end
     end
   end
